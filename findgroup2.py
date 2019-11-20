@@ -4,20 +4,38 @@ import re
 j = 0
 query = []
 code_map = {}
+group_names = []
+nameError = "Incorrect name: please check spelling."
 genome = open('C:\\Users\\scamb\\Documents\\UoB MSc\\Genome_data\\Group outputs\\genomeOutput.txt', 'w')
 
 with open('Eukaryote_codes.txt') as f:
     for line in f:
         fields = re.split("\t", line.strip())
         code_map[fields[0]] = fields[1]
+        if fields[1] not in group_names:
+            group_names.append(fields[1])
 
-print('First group query:')                             #Requesting a group
-query1 = input()
+while True:
+	print('First group query:')                             #Requesting a group
+	query1 = input()
+	if query1 not in group_names:
+		print(nameError)
+	else:
+		break
+
 query.append(query1)
-print('Second group query (or enter to skip):')         #Allows second input to be optional
-query2 = input()
-if query2 != '':
-    query.append(query2)
+
+while True:
+	print('Second group query (or enter to skip):')         #Allows second input to be optional
+	query2 = input()
+	if query2 == '':
+                break
+	elif query2 not in group_names:
+		print(nameError)
+	else:
+		break
+
+query.append(query2)
 
 to_parse = glob.glob('*.fal')				#Searches through all .fal files.
 
