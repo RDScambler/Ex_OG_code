@@ -6,7 +6,7 @@ query = []
 code_map = {}
 group_names = []
 nameError = "Incorrect name: please check spelling."
-genome = open('C:\\Users\\scamb\\Documents\\UoB MSc\\Genome_data\\Group outputs\\genomeOutput.txt', 'w')
+genome = open('C:\\Users\\scamb\\Documents\\UoB MSc\\Genome_data\\OG_4up_arb-fal.tar\\OG_4up_arb-fal\\Group outputs\\genomeOutput.txt', 'w')
 
 with open('Eukaryote_codes.txt') as f:
     for line in f:
@@ -33,9 +33,8 @@ while True:
 	elif query2 not in group_names:
 		print(nameError)
 	else:
+		query.append(query2)
 		break
-
-query.append(query2)
 
 to_parse = glob.glob('*.fal')				#Searches through all .fal files.
 

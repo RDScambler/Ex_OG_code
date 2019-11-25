@@ -1,11 +1,14 @@
 import re
+import glob
 
-lines = open('OG0015727.fal').readlines()
+to_parse = glob.glob('*.fal')
 
-for line in lines:
-	m =  re.search(r'^[^>]\w*[_|0]', line)
-	if m:
-		print('Yes')
-	else:
-		print('No')
-
+for file in to_parse:
+	i = 0
+	with open(file) as f:
+		for line in f:
+			i += 1
+			m =  re.search(r'^[^>]\w*[_|0]', line)		# Checks for missing '>' in sp.code line
+			if m:
+				linecheck = 'Error: missing >, line ' + str(i) + ', file: ' + str(file)
+				print(linecheck)
