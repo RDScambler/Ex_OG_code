@@ -45,17 +45,17 @@ for file in to_parse:
         for line in f:
             if line.startswith('>'):
                 fields = re.split('_', line)            #Separates sp. code
-                species_code = fields[0][1:]            # Removes '>'
+                species_code = fields[0][1:]		# Removes '>'
                 for i in code_map:                      #Linking sp. code to group
                     group = code_map[species_code]
                     if group not in groups_present:     #Adding to group array if new group
                         groups_present.append(group)
     if groups_present == query:                         #Adds file to output if it matches query
         genomewrite = genome.write(f'{file}\n')
-        j += 1                                           
+        j += 1
     elif groups_present == query[::-1]:                 #Accounts for variation in the list order
         genomewrite = genome.write(f'{file}\n')
         j += 1
-        
+
 genomewrite = genome.write(f'Shared gene families: {j}')
 genome.close()
