@@ -1,5 +1,5 @@
 
-import glob
+import glob			# *** Precursor to the function find_group, which is now stored in the group module. Specifically written to iterate over every pairwise set of eukaryote groups. ***
 import re
 
 
