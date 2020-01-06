@@ -1,4 +1,4 @@
-import re
+import re		# *** Returns a dictionary with the total OGs for each eukaryote group. ***
 
 def parse_total():
 	with open("group_total.txt") as f:
@@ -12,5 +12,3 @@ def parse_total():
 
 		totaldic = dict(zip(group, total))
 		return totaldic
-
-parse_total()
