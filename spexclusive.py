@@ -20,13 +20,15 @@ for list in outlistsA:								# Here searching for exclusivity of Telonemids and
 		i = 0
 		for line in f:
 			linelist = re.split("\W+", line)
-			if not set(list).intersection(linelist):		# set.intersection checks if elements are common to both sets.
+			if "Shared" in line:					# Skips final line of file to avoid adding extra i onto freq for each sp!
+				pass
+			elif not set(list).intersection(linelist):		# set.intersection checks if elements are common to both sets.
 				i += 1						# Absence of common elements means 'ingroup' of interest is exclusive.
 				outputwrite = output.write(f"{linelist}\n")
 		freq.append(i)
 
 targetdic = dict(zip(targetspp, freq))
-print(targetdic)
+print("Discoba", targetdic)
 outputwrite = output.write(str(targetdic))
 output.close()
 
@@ -40,12 +42,14 @@ for list in outlistsB:								# Here searching for exclusivity of Telonemids and
 		i = 0
 		for line in f:
 			linelist = re.split("\W+", line)
-			if not set(list).intersection(linelist):
+			if "Shared" in line:
+				pass
+			elif not set(list).intersection(linelist):
 				i += 1
 				outputwrite = output2.write(f"{linelist}\n")
 		freq.append(i)
 
 targetdic2 = dict(zip(targetspp, freq))
-print(targetdic2)
+print("Ancyromonadida", targetdic2)
 outputwrite = output2.write(str(targetdic2))
 output2.close()
