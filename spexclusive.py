@@ -35,7 +35,7 @@ output.close()
 output2 = open("sp_Other_Ancyromonadida_exclusives.txt", "w")
 freq = []
 outlistsB = [outlist, outlist3]
-targetspp = ["Telonemids", "collodictyonids"]
+targetsppB = ["Telonemids", "collodictyonids"]
 
 for list in outlistsB:								# Here searching for exclusivity of Telonemids and collodictyonids in Ancyromonadida output file.
 	with open("sp_Other_Ancyromonadida.txt") as f:
@@ -49,7 +49,27 @@ for list in outlistsB:								# Here searching for exclusivity of Telonemids and
 				outputwrite = output2.write(f"{linelist}\n")
 		freq.append(i)
 
-targetdic2 = dict(zip(targetspp, freq))
+targetdic2 = dict(zip(targetsppB, freq))
 print("Ancyromonadida", targetdic2)
 outputwrite = output2.write(str(targetdic2))
 output2.close()
+
+output3 = open("sp_Other_SAR_exclusives.txt", "w")				# Here searching for exclusivity of of Telonemids and A.twista in SAR output file.
+freq = []
+
+for list in outlistsA:
+	with open("sp_Other_SAR.txt") as f:
+		i = 0
+		for line in f:
+			linelist = re.split("\W+", line)
+			if "Shared" in line:
+				pass
+			elif not set(list).intersection(linelist):
+				i += 1
+				outputWrite = output3.write(f"{linelist}\n")
+		freq.append(i)
+
+targetdic3 = dict(zip(targetspp, freq))
+print("SAR", targetdic3)
+outputWrite = output3.write(str(targetdic3))
+output3.close()
