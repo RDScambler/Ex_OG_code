@@ -1,10 +1,10 @@
 			# This script will parse OGs that are comprised entirely of ventral groove-bearing cells.
 import re
-import og_list
+import full_og_list
 
 # og_list is imported - created in a separate file for reusability.
 output = open("vg_only.txt", "w")
-og_list = og_list.og_list()
+og_list = full_og_list.full_og_list()
 
 # non_vg are those species that lack a ventral groove.
 # (inlcuded up to this point since they belong to same groups as species that have vgs).
