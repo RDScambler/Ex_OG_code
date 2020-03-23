@@ -7,13 +7,12 @@ import group
 import re
 
 # To be executed in total_genome dir.
-# split_other_groups currently omitted in favour of smaller group set.
-# This is just me being selective about the data to be displayed in R.
+# split_other_groups list is currently being used.
 to_parse = glob.glob("*_allOGs.txt")
 output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_Data/OG_arb-fal/new_outputs/group_total.txt", "w")
 original_groups = group.groups()
-split_other_groups = group.split_other_groups()
-correct_order_groups = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Discoba", "Ancyromonadida", "Cryptista", "Amoebozoa", "Collodictyonids", "Metamonads", "Malawimonadidae"]
+correct_order_groups = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Discoba", "Ancyromonadida", "Cryptista", "Atwista", "Amoebozoa", "Collodictyonids", "Metamonads", "Apusomonada", "Hemimastigophora", "Malawimonadidae"]
+
 for file in to_parse:
 	name = re.split("_", file)
 	og = group.parse_OG(file)
@@ -25,9 +24,11 @@ output.close()
 # Writes out totals and own OGs to a file as a single vector (as table6.py did).
 # The data can then be processed in R.
 own_OGs_to_parse = glob.glob("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/*.txt")
-totals_own_output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/vector_totals_own_split_other.txt", "w")
+totals_own_output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/vector_totals_own_15.txt", "w")
 
-for eugroup in correct_order_groups:							# correct_order_groups must be at top of loop to ensure correct order is maintained.
+# correct_order_groups must be at top of loop to ensure correct order is maintained.
+# list of choice can be configured here.
+for eugroup in correct_order_groups:
 	for file in own_OGs_to_parse:
 		res = re.search(r"(\w+)_(\w+)_output.txt$", file)
 		if res:

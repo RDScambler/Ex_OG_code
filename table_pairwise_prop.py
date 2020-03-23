@@ -8,9 +8,13 @@ import glob
 # correct_order and group_names can be switched as needed.
 # Also remember to configure n in chunks(l, n) to correspond to number of groups in group_names.
 # correct_order is correct for proportion of total genome shared.
-output = open("vector_ordered_propdata_alt.txt", "w")
-correct_order = ["SAR", "Haptista", "Archaeplastida", "Ancyromonadida", "Telonemids", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
+output = open("vector_ordered_propdata_15.txt", "w")
+correct_order_12 = ["SAR", "Haptista", "Archaeplastida", "Ancyromonadida", "Telonemids", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
+correct_order_15 = ["Telonemids", "Haptista", "SAR", "Atwista", "Archaeplastida", "Ancyromonadida", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
+
 group_names = ["Amoebozoa", "Ancyromonadida", "Archaeplastida", "Collodictyonids", "Cryptista", "Discoba", "Haptista", "Malawimonadidae", "Metamonads", "Obazoa", "SAR", "Telonemids"]
+split_other_groups = sorted(group.split_other_groups())
+group_names = split_other_groups
 data = []
 
 for name in group_names:
@@ -33,7 +37,7 @@ def chunks(l, n):
 	for i in range(0, len(l), n):			# The 3rd argument n is the stepping distance that i jumps after each iteration.
 		yield l[i:i + n]			# Yield is here used in place of return, since it returns a sequence of lists (rather than terminating after the first list is returned).
 
-chunkdata = list(chunks(data, 12))			# n MUST be configured depending on number in group_names.
+chunkdata = list(chunks(data, 15))			# n MUST be configured depending on number in group_names.
 totalOG = group.parse_total()				# Retrieving totals dictionary.
 
 propdata = []
@@ -47,7 +51,7 @@ for group in group_names:				# Calculating genome similarity
 		propdata.append(proportion)
 	i += 1
 
-for eugroup in correct_order:										# Choose list as appropriate.
+for eugroup in correct_order_15:									# Choose list as appropriate.
 	j = 0
 	for pos, name in enumerate(group_names):
 		group_data = propdata[j:j + len(group_names)]						# Captures the data corresponding to the group.
@@ -59,8 +63,6 @@ for eugroup in correct_order:										# Choose list as appropriate.
 					group_data[index] = 0
 					translation_table = dict.fromkeys(map(ord, "\w+[',]"), None) 	# This is what I use to strip lists of their punctuation.
 					fdata = str(group_data).translate(translation_table)
-					print(eugroup, fdata)
-#					outputWrite = output.write(f"{fdata} ")
-#			print(sum(group_data))
+					outputWrite = output.write(f"{fdata} ")
 
 output.close()
