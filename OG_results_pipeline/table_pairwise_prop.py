@@ -1,6 +1,10 @@
-			# Formerly table2.py.
+			# Currently configured for 18-way split.
+			# Now also writes out prop. data to an Excel file.
 			# Extracts the same data as table_pairwise.py, but converts the pairwise OGs to % total for each group.
 			# Now modified for ease of use in R. Proportional data is correctly ordered, and within-group data set to 0.
+
+from openpyxl import Workbook
+from openpyxl import load_workbook
 import re
 import group
 import glob
@@ -8,9 +12,14 @@ import glob
 # correct_order and group_names can be switched as needed.
 # Also remember to configure n in chunks(l, n) to correspond to number of groups in group_names.
 # correct_order is correct for proportion of total genome shared.
-output = open("vector_ordered_propdata_alt.txt", "w")
-correct_order = ["SAR", "Haptista", "Archaeplastida", "Ancyromonadida", "Telonemids", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
-group_names = ["Amoebozoa", "Ancyromonadida", "Archaeplastida", "Collodictyonids", "Cryptista", "Discoba", "Haptista", "Malawimonadidae", "Metamonads", "Obazoa", "SAR", "Telonemids"]
+output = open("vector_ordered_propdata_18.txt", "w")
+correct_order_12 = ["SAR", "Haptista", "Archaeplastida", "Ancyromonadida", "Telonemids", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
+correct_order_15 = ["Telonemids", "Haptista", "SAR", "Atwista", "Archaeplastida", "Ancyromonadida", "Obazoa", "Discoba", "Collodictyonids", "Cryptista", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
+correct_order_includingown_18 = ["Alveolata", "Stramenopiles", "Archaeplastida", "Obazoa", "Telonemids", "Centrohelids", "Ancyromonadida", "Discoba", "Rhizaria", "Cryptista", "Atwista", "Haptophyta", "Collodictyonids", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
+
+# Choose the necessary group list from the group module.
+split_other_groups = sorted(group.split_groups_18())
+group_names = split_other_groups
 data = []
 
 for name in group_names:
@@ -33,7 +42,7 @@ def chunks(l, n):
 	for i in range(0, len(l), n):			# The 3rd argument n is the stepping distance that i jumps after each iteration.
 		yield l[i:i + n]			# Yield is here used in place of return, since it returns a sequence of lists (rather than terminating after the first list is returned).
 
-chunkdata = list(chunks(data, 12))			# n MUST be configured depending on number in group_names.
+chunkdata = list(chunks(data, 18))			# n MUST be configured depending on number in group_names.
 totalOG = group.parse_total()				# Retrieving totals dictionary.
 
 propdata = []
@@ -47,7 +56,9 @@ for group in group_names:				# Calculating genome similarity
 		propdata.append(proportion)
 	i += 1
 
-for eugroup in correct_order:										# Choose list as appropriate.
+xl_data = []
+
+for eugroup in correct_order_includingown_18:									# Choose list as appropriate.
 	j = 0
 	for pos, name in enumerate(group_names):
 		group_data = propdata[j:j + len(group_names)]						# Captures the data corresponding to the group.
@@ -55,12 +66,26 @@ for eugroup in correct_order:										# Choose list as appropriate.
 		group_data = [float(number) for number in group_data]					# Converts to a list of floats (for proportion)..
 		if name == eugroup:
 			for index, x in enumerate(group_data):						# Loop comparing indices of group_names and group_data.
-				if index == pos:							# Sets own group values to 0.
-					group_data[index] = 0
+				if index == pos:
+					group_data.insert(0, eugroup)					# insert() adds in the group name at any index.
+					xl_data.append(group_data)					# Builds up list ready to be written out to Excel.
+					group_data[index] = 0						# Sets own group values to 0.
 					translation_table = dict.fromkeys(map(ord, "\w+[',]"), None) 	# This is what I use to strip lists of their punctuation.
 					fdata = str(group_data).translate(translation_table)
-					print(eugroup, fdata)
-#					outputWrite = output.write(f"{fdata} ")
-#			print(sum(group_data))
+					outputWrite = output.write(f"{fdata} ")
+
+
+# xl_data takes proportional data before own group data is set to zero.
+# Small bug still sets Alveolata's to zero for some reason...
+# This data is now written out to Excel - the same file storing non-proportional data.
+wb = load_workbook(filename = "Pairwise_18.xlsx")
+new_ws = wb.create_sheet("Proportional data")
+
+new_ws.append(group_names)
+
+for row in xl_data:
+	new_ws.append(row)
+
+wb.save("Pairwise_18_copy.xlsx")
 
 output.close()

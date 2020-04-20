@@ -9,19 +9,20 @@ import group
 import glob
 
 # group_names can be configured depending on the groups in need of processing.
-# Currently group_names is edited from split_group_other() to only include the Telonemids/Collodictyonids subgroups.
-# This is necessary to produce a 12x12 matrix.
-# Will do a 15x15 in the future (NOTE: Telo-Atwista share 609).
+# split_groups_18 now includes split SAR and Haptista.
+# Should correctly work through output files in new_outputs assuming all target groups are contained within group_names.
 group_names = ["Amoebozoa", "Ancyromonadida", "Archaeplastida", "Collodictyonids", "Cryptista", "Discoba", "Haptista", "Malawimonadidae", "Metamonads", "Obazoa", "SAR", "Telonemids"]
+split_groups_18 = sorted(group.split_groups_18())
+group_names = split_groups_18
 data = []
-output = open("ordered_vector_data_minusown_alt.txt", "w")
+output = open("ordered_vector_data_minusown_18.txt", "w")
 
 for name in group_names:
 	to_parse = glob.glob("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/*.txt")
 	for file in to_parse:
 		filename = re.search(r"([A-Z]\w+)_([A-Z]\w+)_output.txt$", file)
 		if filename:
-			if filename.group(1) not in group_names:		# Skips 'Other' files in new_outputs.
+			if filename.group(1) not in group_names:		# Skips files in new_outputs (if certain groups are being excluded).
 				pass
 			elif filename.group(2) not in group_names:		# Does the same as above (Since name order in filename can vary).
 				pass
@@ -35,12 +36,14 @@ for name in group_names:
 # This list can be modified as needed.
 # At this time I have arranged the groups in order of total OGs shared.
 # This will result in a more sensible-looking stacked barplot.
-# The alt list includes 'Other' subgroups relevant to the analysis (i.e Telonemids and Collodictyonids).
+# The 12 and 15 are split 'Other' subgroups, 18 also splits SAR and Haptista.
 correct_order = ["SAR", "Other", "Archaeplastida", "Haptista", "Obazoa", "Discoba", "Ancyromonadida", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
 correct_order_minusown = ["SAR", "Other", "Haptista", "Discoba", "Archaeplastida", "Obazoa", "Ancyromonadida", "Cryptista", "Amoebozoa", "Metamonads", "Malawimonadidae"]
-correct_order_minusown_alt = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Ancyromonadida", "Discoba", "Cryptista", "Collodictyonids", "Amoebozoa", "Metamonads", "Malawimonadidae"]
+correct_order_minusown_12 = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Ancyromonadida", "Discoba", "Cryptista", "Collodictyonids", "Amoebozoa", "Metamonads", "Malawimonadidae"]
+correct_order_minusown_15 = ["SAR", "Haptista", "Telonemids", "Archaeplastida", "Obazoa", "Ancyromonadida", "Discoba", "Atwista", "Cryptista", "Collodictyonids", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
+correct_order_minusown_18 = ["Alveolata", "Telonemids", "Stramenopiles", "Archaeplastida", "Obazoa", "Centrohelids", "Ancyromonadida", "Discoba", "Atwista", "Haptophyta", "Cryptista", "Rhizaria", "Collodictyonids", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
 
-for eugroup in correct_order_minusown_alt:								# Choose list as appropriate.
+for eugroup in correct_order_minusown_18:								# Choose list as appropriate.
 	i = 0
 	for pos, name in enumerate(group_names):
 		group_data = data[i:i + len(group_names)]						# Captures the data corresponding to the group.

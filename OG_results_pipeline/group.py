@@ -1,6 +1,7 @@
 
 				# group module. codes(), groups(), split_other_groups(), parse_OG(), parse_total() and find_group() functions are defined here.
 				# Incorporates code from old parse_OG.py and parse_total.py files (integrated for clarity/convenience).
+				# NOTE: at some point can incorporate codes() functions into 1 function with file as argument. Same for group_name lists.
 import re
 import glob
 
@@ -22,6 +23,15 @@ def alt_codes():
 			code_map[fields[0]] = fields[1]
 	return code_map
 
+def alt_codes_18():
+	"""alt_codes_18 returns a dictionary with 'SAR' and Haptista divided into their respective subgroups."""
+	code_map = {}
+	with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/Eukaryote_codes_alt_18.txt") as f:
+		for line in f:
+			fields = re.split("\t", line.strip())
+			code_map[fields[0]] = fields[1]
+	return code_map
+
 def groups():
 	"""groups() uses the dictionary defined in codes() to create an array containing all eukaryote groups in dataset."""
 	group_names = []
@@ -32,9 +42,18 @@ def groups():
 	return group_names
 
 def split_other_groups():
-	"""split_other_groups returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
+	"""split_other_groups() returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
 	group_names = []
 	spcode = alt_codes()
+	for group in spcode.values():
+		if group not in group_names:
+			group_names.append(group)
+	return group_names
+
+def split_groups_18():
+	"""split_groups_18() returns a group list with 'Other', SAR and Haptista all divided into subgroups."""
+	group_names = []
+	spcode = alt_codes_18()
 	for group in spcode.values():
 		if group not in group_names:
 			group_names.append(group)
