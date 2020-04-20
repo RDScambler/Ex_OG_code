@@ -7,11 +7,12 @@ import group
 import re
 
 # To be executed in total_genome dir.
-# split_other_groups list is currently being used.
+# 18 groups list is currently being used.
 to_parse = glob.glob("*_allOGs.txt")
-output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_Data/OG_arb-fal/new_outputs/group_total.txt", "w")
+output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_Data/OG_arb-fal/new_outputs/summary_data/group_total.txt", "w")
 original_groups = group.groups()
-correct_order_groups = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Discoba", "Ancyromonadida", "Cryptista", "Atwista", "Amoebozoa", "Collodictyonids", "Metamonads", "Apusomonada", "Hemimastigophora", "Malawimonadidae"]
+correct_order_groups_15 = ["SAR", "Haptista", "Archaeplastida", "Obazoa", "Telonemids", "Discoba", "Ancyromonadida", "Cryptista", "Atwista", "Amoebozoa", "Collodictyonids", "Metamonads", "Apusomonada", "Hemimastigophora", "Malawimonadidae"]
+correct_order_groups_18 = ["Alveolata", "Stramenopiles", "Archaeplastida", "Obazoa", "Telonemids", "Discoba", "Centrohelids", "Ancyromonadida", "Cryptista", "Rhizaria", "Haptyophyta", "Atwista", "Amoebozoa", "Collodictyonids", "Metamonads", "Apusomonada", "Hemimastigophora", "Malawimonadidae"]
 
 for file in to_parse:
 	name = re.split("_", file)
@@ -20,15 +21,14 @@ for file in to_parse:
 
 output.close()
 
-# To be executed once pairwise results have been processed for Telonemids/Collodictyonids.
-# Writes out totals and own OGs to a file as a single vector (as table6.py did).
+# Writes out totals and own OGs to a file as a single vector.
 # The data can then be processed in R.
 own_OGs_to_parse = glob.glob("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/*.txt")
-totals_own_output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/vector_totals_own_15.txt", "w")
+totals_own_output = open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/summary_data/vector_totals_own_18.txt", "w")
 
 # correct_order_groups must be at top of loop to ensure correct order is maintained.
 # list of choice can be configured here.
-for eugroup in correct_order_groups:
+for eugroup in correct_order_groups_18:
 	for file in own_OGs_to_parse:
 		res = re.search(r"(\w+)_(\w+)_output.txt$", file)
 		if res:
@@ -38,3 +38,5 @@ for eugroup in correct_order_groups:
 					total = totaldic[eugroup]
 					own = group.parse_OG(file)
 					outputWrite = totals_own_output.write(f"{total} {own} ")	# Output formatted for R.
+
+
