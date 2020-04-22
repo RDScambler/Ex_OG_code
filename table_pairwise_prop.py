@@ -69,16 +69,15 @@ for eugroup in correct_order_includingown_18:									# Choose list as appropria
 				if index == pos:
 					group_data.insert(0, eugroup)					# insert() adds in the group name at any index.
 					xl_data.append(group_data)					# Builds up list ready to be written out to Excel.
-					group_data[index] = 0						# Sets own group values to 0.
+#					group_data[index] = 0						# Sets own group values to 0.
 					translation_table = dict.fromkeys(map(ord, "\w+[',]"), None) 	# This is what I use to strip lists of their punctuation.
 					fdata = str(group_data).translate(translation_table)
 					outputWrite = output.write(f"{fdata} ")
 
-
 # xl_data takes proportional data before own group data is set to zero.
-# Small bug still sets Alveolata's to zero for some reason...
+# But - This still somehow sets values to zero, so I must switch off for outputting to Excel. Do not understand...
 # This data is now written out to Excel - the same file storing non-proportional data.
-wb = load_workbook(filename = "Pairwise_18.xlsx")
+wb = load_workbook(filename = "/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/data2go/Pairwise_proportional_18.xlsx")
 new_ws = wb.create_sheet("Proportional data")
 
 new_ws.append(group_names)
@@ -86,6 +85,6 @@ new_ws.append(group_names)
 for row in xl_data:
 	new_ws.append(row)
 
-wb.save("Pairwise_18_copy.xlsx")
+wb.save("Pairwise_proportional_18_copy.xlsx")
 
 output.close()

@@ -1,12 +1,12 @@
-
-				# group module. codes(), groups(), split_other_groups(), parse_OG(), parse_total() and find_group() functions are defined here.
+				# group module. Contains all necessary functions involved in the OG pipeline.
 				# Incorporates code from old parse_OG.py and parse_total.py files (integrated for clarity/convenience).
 				# NOTE: at some point can incorporate codes() functions into 1 function with file as argument. Same for group_name lists.
+				# However, this would mean many scripts would need to be altered, so maybe not...
 import re
 import glob
 
 def codes():
-	"""codes() returns a dictionary containing sp.codes as keys and eukaryote groups as values. This can be used to search through genomic data for presence/absence of particular groups."""
+	"""codes returns a dictionary containing sp.codes as keys and eukaryote groups as values. This can be used to search through genomic data for presence/absence of particular groups."""
 	code_map = {}
 	with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/Eukaryote_codes.txt") as f:
 		for line in f:
@@ -15,7 +15,7 @@ def codes():
 	return code_map
 
 def alt_codes():
-	"""alt_codes() returns a dictionary with the 'Other' eukaryote group divided into subgroups according to their phylogenetic relationships."""
+	"""alt_codes returns a dictionary with the 'Other' eukaryote group divided into subgroups according to their phylogenetic relationships."""
 	code_map = {}
 	with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/Eukaryote_codes_alt.txt") as f:
 		for line in f:
@@ -32,8 +32,27 @@ def alt_codes_18():
 			code_map[fields[0]] = fields[1]
 	return code_map
 
+def long_name_codes(code_map):
+	"""long_name_codes is an alternative to the other code maps, returning full sp. names instead of just abbreviations.
+	To avoid remaking different code maps for different group splits, this function takes one of the original code maps as an argument. """
+	long_name_code_map = {}
+
+	for sp_code in code_map:
+		group = code_map[sp_code]
+		# Note: this file is currently used as a source for the names, but in principle any file containing all the long names could be used.
+		# The creation of a source file (i.e. a new Eukaryotes_codes.txt) is avoided since this would reduce flexibility when switching between group splits.
+		with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/iqtree/Ancyromonads_Collodictyonids/Ancyromonads_Collodictyonids.constr") as f:
+			for line in f:
+				res = re.search(sp_code + r"(_\w+-\w+)", line.strip())
+				if res:
+					long_name = res.group(1)
+					full_name = sp_code + long_name
+					long_name_code_map[full_name] = group
+
+	return long_name_code_map
+
 def groups():
-	"""groups() uses the dictionary defined in codes() to create an array containing all eukaryote groups in dataset."""
+	"""groups uses the dictionary defined in codes() to create an array containing all eukaryote groups in dataset."""
 	group_names = []
 	spcode = codes()
 	for group in spcode.values():
@@ -42,7 +61,7 @@ def groups():
 	return group_names
 
 def split_other_groups():
-	"""split_other_groups() returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
+	"""split_other_groups returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
 	group_names = []
 	spcode = alt_codes()
 	for group in spcode.values():
@@ -51,7 +70,7 @@ def split_other_groups():
 	return group_names
 
 def split_groups_18():
-	"""split_groups_18() returns a group list with 'Other', SAR and Haptista all divided into subgroups."""
+	"""split_groups_18 returns a group list with 'Other', SAR and Haptista all divided into subgroups."""
 	group_names = []
 	spcode = alt_codes_18()
 	for group in spcode.values():
@@ -60,7 +79,7 @@ def split_groups_18():
 	return group_names
 
 def parse_OG(file):
-	""" parse_OG() is designed to parse out the 'Shared gene families: ' data from find_group() output files."""
+	""" parse_OG is designed to parse out the 'Shared gene families: ' data from find_group() output files."""
 	with open(file) as f:
 		for line in f:
 			og = re.search(r"\w*:\s(\w*)", line)			# I.e. "Shared gene families: NNNN"
@@ -68,7 +87,7 @@ def parse_OG(file):
 				return og.group(1)
 
 def parse_total():
-	"""parse_total() returns a dictionary with the total number of OGs that each group has. Expanded from the original to include the 'Other' subgroups."""
+	"""parse_total returns a dictionary with the total number of OGs that each group has. Expanded from the original to include the 'Other' subgroups."""
 	with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/summary_data/group_total.txt") as f:
 		group = []
 		total =[]
@@ -81,7 +100,7 @@ def parse_total():
 		return totaldic
 
 def find_group(set_query, code_map):
-	"""find_group() takes a set as an argument, potentially from a user's input, to be compared with the set of groups_present in each .fal file in directory.
+	"""find_group takes a set as an argument, potentially from a user's input, to be compared with the set of groups_present in each .fal file in directory.
 	Matching files are written to an output file with the set elements (i.e. group names) as the file title.
 	The code_map ought to be chosen from either codes() or alt_codes(), depending on whether or not the 'Other' subgroups are being queried.
 	It is important here that the data type of set_query is correct (i.e list if a single element, set if multiple elements).
