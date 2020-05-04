@@ -114,6 +114,7 @@ def find_group(set_query, code_map):
 		set_query = [set_query]							# [] necessary to match the str set_query to groups_present (which is a single element list).
 		x = 1
 	genome = open(filename + "_output.txt", "w")
+	genomewrite = genome.write(f'{set_query}\n')
 	k = 0
 	for file in to_parse:
 		groups_present = []
