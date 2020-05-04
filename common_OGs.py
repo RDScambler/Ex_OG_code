@@ -27,11 +27,10 @@ for groups in lists:
 		codes = codes_15
 	else:
 		codes = codes_18
-for g in groups_15:
-	codes = codes_15
-	removed_groups = groups_15[:]
-	removed_groups.remove(g)
-	group.find_group(removed_groups, codes)
+	for g in groups:
+		removed_groups = groups[:]
+		removed_groups.remove(g)
+		group.find_group(removed_groups, codes)
 
 to_parse = glob.glob("*_output.txt")
 
@@ -49,4 +48,4 @@ for file in to_parse:
 	elif len(filename) == 18:
 		for g in groups_18:
 			if g not in filename:
-				os.rename(file, r"minus_" + g + "_output.txt")
+				os.rename(file, r"minus_" + g + "_18_output.txt")
