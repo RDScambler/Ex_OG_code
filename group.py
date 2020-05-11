@@ -99,6 +99,24 @@ def parse_total():
 		totaldic = dict(zip(group, total))
 		return totaldic
 
+def sp_total_dic:
+	"""sp_total_dic iterates over every file in sp_individual_total/, and stores the total number of OGs that each sp. has in a dictionary. """
+	codes = group.alt_codes_18()
+	to_parse = glob.glob("sp_individual_total/*.txt")
+	sp_list = []
+	sp_total_dic = {}
+	for sp in codes:
+		sp_list.append(sp)
+	for sp in sp_list:
+		for file in to_parse:
+			split_path = re.split(r"/", file)
+			split_file = re.split(r"_", split_path[1])
+			if split_file[0] == sp:
+				total = group.parse_OG(file)
+				sp_total_dic[sp] = total
+
+return sp_total_dic
+
 def find_group(set_query, code_map):
 	"""find_group takes a set as an argument, potentially from a user's input, to be compared with the set of groups_present in each .fal file in directory.
 	Matching files are written to an output file with the set elements (i.e. group names) as the file title.
