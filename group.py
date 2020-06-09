@@ -115,7 +115,7 @@ def sp_total_dic:
 				total = group.parse_OG(file)
 				sp_total_dic[sp] = total
 
-return sp_total_dic
+	return sp_total_dic
 
 def find_group(set_query, code_map):
 	"""find_group takes a set as an argument, potentially from a user's input, to be compared with the set of groups_present in each .fal file in directory.
