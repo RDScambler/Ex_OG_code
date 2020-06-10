@@ -32,17 +32,17 @@ This module contains key functions: parse_total() is a dictionary storing the re
 alt_codes_18() contain the different species code dictionaries, depending on which group sets are being considered. find_group()  
 carries out the group search in OG_arb-fal.
 
-**table_pairwise.py**
-This replaces table4.py (removed to reduce confusion) - it parses all the pairwise group data with 'Other' divided into its subgroups.  
-Can be reconfigured to parse groups of choice. Data are ordered, formatted and written out to ordered_vector_data_minusown_xx.txt.  
-NOTE: table4.py data is stored in ordered_vector_data_minusown.txt. Code must be reconfigured in table_pairwise.py to reproduce  
-original data. In reality it should only require the editing of the group_names list. 
+**table_pairwise.py**  
+This replaces table4.py (removed to reduce confusion) - it parses all the pairwise group data with 'Other' divided into its  
+subgroups. Can be reconfigured to parse groups of choice. Data are ordered, formatted and written out   
+ordered_vector_data_minusown_xx.txt. NOTE: table4.py data is stored in ordered_vector_data_minusown.txt. Code must be  
+reconfigured in table_pairwise.py to reproduce original data. In reality it should only require the editing of the group_names list. 
 
 **table_pairwise_prop.py**  
-Formerly table2.py Works the same as table_pairwise.py but converts the data to the proportion of each group's genome. Output is stored  
-in ordered_vector_propdata_xx.txt. NOTE: as with table_pairwise.py, to configure output the group_names and correct_order lists should  
-be edited (remember these need to be the same length! As does n in chunks(l, n)). This script now also outputs proportional data to an  
-Excel file - the same output file as for table_pairwise_xlout.py. 
+Formerly table2.py Works the same as table_pairwise.py but converts the data to the proportion of each group's genome. Output  
+is stored in ordered_vector_propdata_xx.txt. NOTE: as with table_pairwise.py, to configure output the group_names and  
+correct_order lists should be edited (remember these need to be the same length! As does n in chunks(l, n)). This script now  
+also outputs proportional data to an Excel file - the same output file as for table_pairwise_xlout.py. 
 
 **table_pairwise_xlout.py**  
 This script writes out totals data to an Excel file, 'Pairwise_18.xlsx'. Note the equivalent output is parsed for proportional data,  
