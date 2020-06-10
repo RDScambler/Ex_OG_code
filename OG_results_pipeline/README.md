@@ -7,8 +7,8 @@ altering the group lists that are found in the different scripts. Currently 12, 
 present. These, and their corresponding dictionaries, can all be found in the group module.
 
 **find_group.py**  
-This iterates over every pairwise group of eukaryotes in the dataset and finds OGs that are unique for each pair of groups. This  
-is now stored in the group module, however, the original script remains here.
+This iterates over every pairwise group of eukaryotes in the dataset and finds OGs that are unique for each pair of groups.  
+This is now stored in the group module, however, the original script remains here.
 
 **find_group_alt.py**  
 This functions like the original find_group.py, but iterates over the divided 'Other' subgroups rather than the original groups.
