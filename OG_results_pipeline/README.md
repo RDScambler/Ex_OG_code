@@ -17,20 +17,20 @@ This functions like the original find_group.py, but iterates over the divided 'O
 As with find_group_alt.py, this script iterates over the divided subgroups of SAR and Haptista (as well as 'Other').
 
 **totalGenome.py**  
-Similar to find_group.py, totalGenome.py finds all the OGs of each group in the dataset, but doesn't take exclusivity into account.  
-The total genome is therefore parsed, and this is used to calculate the proportional data in table_pairwise_prop.py. Output files  
-from totalGenome.py are stored in total_genome.
+Similar to find_group.py, totalGenome.py finds all the OGs of each group in the dataset, but doesn't take exclusivity  
+into account. The total genome is therefore parsed, and this is used to calculate the proportional data in  
+table_pairwise_prop.py. Output files from totalGenome.py are stored in total_genome.
 
 **total.py**  
 Integrates the functionality of former scripts parseOG.py and table6.py. Totals for every group are written out to group_total.txt  
-(this output is used by parse_total(), kept in the group module). The within-group output data in new_outputs are then extracted  
-and written out as a vector, with the corresponding totals data, in order, to vector_totals_own_split_other.txt. Outputs can be  
-configured as needed by editing the group list to be iterated over.
+(this output is used by parse_total(), kept in the group module). The within-group output data in new_outputs are  
+then extracted and written out as a vector, with the corresponding totals data, in order, to  
+vector_totals_own_split_other.txt. Outputs can be configured as needed by editing the group list to be iterated over.
 
 **group.py**  
 This module contains key functions: parse_total() is a dictionary storing the results of totalGenome.py. codes(), alt_codes() and  
-alt_codes_18() contain the different species code dictionaries, depending on which group sets are being considered. find_group()  
-carries out the group search in OG_arb-fal.
+alt_codes_18() contain the different species code dictionaries, depending on which group sets are being  
+considered. find_group() carries out the group search in OG_arb-fal.
 
 **table_pairwise.py**  
 This replaces table4.py (removed to reduce confusion) - it parses all the pairwise group data with 'Other' divided into its  
@@ -39,10 +39,11 @@ ordered_vector_data_minusown_xx.txt. NOTE: table4.py data is stored in ordered_v
 reconfigured in table_pairwise.py to reproduce original data. In reality it should only require the editing of the group_names list. 
 
 **table_pairwise_prop.py**  
-Formerly table2.py Works the same as table_pairwise.py but converts the data to the proportion of each group's genome. Output  
-is stored in ordered_vector_propdata_xx.txt. NOTE: as with table_pairwise.py, to configure output the group_names and  
-correct_order lists should be edited (remember these need to be the same length! As does n in chunks(l, n)). This script now  
-also outputs proportional data to an Excel file - the same output file as for table_pairwise_xlout.py. 
+Formerly table2.py Works the same as table_pairwise.py but converts the data to the proportion of each group's  
+genome. Output is stored in ordered_vector_propdata_xx.txt. NOTE: as with table_pairwise.py, to configure output  
+the group_names and correct_order lists should be edited (remember these need to be the same length! As does n  
+in chunks(l, n)). This script now also outputs proportional data to an Excel file - the same output file as  
+for table_pairwise_xlout.py. 
 
 **table_pairwise_xlout.py**  
 This script writes out totals data to an Excel file, 'Pairwise_18.xlsx'. Note the equivalent output is parsed for proportional data,  
