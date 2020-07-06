@@ -1,7 +1,8 @@
 
 def full_og_list(file):
 	""" This list stores all OG filenames associated with a particular biological question.
-	    Can be useful in post-eggnog analysis. Input file should contain relevant OG filenames. """
+	    Can be useful in post-eggnog analysis. Input file should contain relevant OG filenames only.
+	    (extra text will interfere with function). """
 
 	full_og_list = []
 	with open(file) as f:
