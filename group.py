@@ -86,6 +86,19 @@ def parse_OG(file):
 			if og:
 				return og.group(1)
 
+def count_ogs(file):
+	"""count_ogs searches through any document and appends to a list all the different OG strings.
+	This regex is not specified with any preceding "_" or trailing ".fal" due to the variety of contexts OGs may occur in."""
+	og_list = []
+	with open(file) as f:
+		for line in f:
+			res = re.search(r"(OG\d{7})", line.strip())
+			if res:
+				og = res.group(1)
+				if og not in og_list:
+					og_list.append(og)
+	return og_list
+
 def parse_total():
 	"""parse_total returns a dictionary with the total number of OGs that each group has. Expanded from the original to include the 'Other' subgroups."""
 	with open("/mnt/c/Users/scamb/Documents/uob_msc/Genome_data/OG_arb-fal/new_outputs/summary_data/group_total.txt") as f:
@@ -99,7 +112,7 @@ def parse_total():
 		totaldic = dict(zip(group, total))
 		return totaldic
 
-def sp_total_dic:
+def sp_total_dic():
 	"""sp_total_dic iterates over every file in sp_individual_total/, and stores the total number of OGs that each sp. has in a dictionary. """
 	codes = group.alt_codes_18()
 	to_parse = glob.glob("sp_individual_total/*.txt")
