@@ -1,12 +1,12 @@
 				# Alternative to the original find_group.py, iterates over the divided 'Other' subgroups.
-				# New alt_codes() and split_other_groups() created in group.py to accomodate this.
+				# New alt_codes() and alt_groups() created in group.py to accomodate this.
 import re
 import glob
 import group
 
 codes = group.alt_codes()
 new_groups = ['Apusomonada', 'Atwista', 'Collodictyonids', 'Hemimastigophora', 'Telonemids']
-all_groups = group.split_other_groups()
+all_groups = group.alt_groups()
 sorted_all_groups = sorted(all_groups)
 all_sets = []
 

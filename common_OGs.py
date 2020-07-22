@@ -6,8 +6,8 @@ import glob
 import group
 
 # Two different group classifications are defined, to be iterated over.
-groups_15 = group.split_other_groups()
-groups_18 = group.split_groups_18()
+groups_15 = group.alt_groups()
+groups_18 = group.alt_groups_18()
 lists = [groups_15, groups_18]
 
 # Corresponding code_maps are defined.

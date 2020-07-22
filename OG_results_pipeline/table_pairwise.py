@@ -9,11 +9,11 @@ import group
 import glob
 
 # group_names can be configured depending on the groups in need of processing.
-# split_groups_18 now includes split SAR and Haptista.
+# alt_groups_18 now includes split SAR and Haptista.
 # Should correctly work through output files in new_outputs assuming all target groups are contained within group_names.
 group_names = ["Amoebozoa", "Ancyromonadida", "Archaeplastida", "Collodictyonids", "Cryptista", "Discoba", "Haptista", "Malawimonadidae", "Metamonads", "Obazoa", "SAR", "Telonemids"]
-split_groups_18 = sorted(group.split_groups_18())
-group_names = split_groups_18
+alt_groups_18 = sorted(group.alt_groups_18())
+group_names = alt_groups_18
 data = []
 output = open("ordered_vector_data_minusown_18.txt", "w")
 

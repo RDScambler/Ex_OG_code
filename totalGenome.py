@@ -5,7 +5,7 @@ import group
 import re
 
 codes = group.alt_codes_18()
-group_names = group.split_groups_18() 		# split_groups_18() has eukaryote groups SAR and Haptista, as well as 'Other', split into their respective subgroups.
+group_names = group.alt_groups_18() 		# alt_groups_18() has eukaryote groups SAR and Haptista, as well as 'Other', split into their respective subgroups.
 
 for name in group_names:
 	to_parse = glob.glob("*.fal")

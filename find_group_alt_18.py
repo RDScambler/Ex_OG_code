@@ -6,7 +6,7 @@ import group
 
 codes = group.alt_codes_18()
 new_groups = ['Alveolata', 'Centrohelids', 'Haptophyta', 'Rhizaria', 'Stramenopiles']
-all_groups = group.split_groups_18()
+all_groups = group.alt_groups_18()
 sorted_all_groups = sorted(all_groups)
 all_sets = []
 

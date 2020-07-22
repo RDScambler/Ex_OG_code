@@ -60,8 +60,8 @@ def groups():
 			group_names.append(group)
 	return group_names
 
-def split_other_groups():
-	"""split_other_groups returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
+def alt_groups():
+	"""alt_groups returns a similar list to the original groups(), however 'Other' is divided into its various subgroups."""
 	group_names = []
 	spcode = alt_codes()
 	for group in spcode.values():
@@ -69,8 +69,8 @@ def split_other_groups():
 			group_names.append(group)
 	return group_names
 
-def split_groups_18():
-	"""split_groups_18 returns a group list with 'Other', SAR and Haptista all divided into subgroups."""
+def alt_groups_18():
+	"""alt_groups_18 returns a group list with 'Other', SAR and Haptista all divided into subgroups."""
 	group_names = []
 	spcode = alt_codes_18()
 	for group in spcode.values():

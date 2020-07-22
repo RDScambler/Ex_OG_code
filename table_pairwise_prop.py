@@ -18,8 +18,8 @@ correct_order_15 = ["Telonemids", "Haptista", "SAR", "Atwista", "Archaeplastida"
 correct_order_includingown_18 = ["Alveolata", "Stramenopiles", "Archaeplastida", "Obazoa", "Telonemids", "Centrohelids", "Ancyromonadida", "Discoba", "Rhizaria", "Cryptista", "Atwista", "Haptophyta", "Collodictyonids", "Amoebozoa", "Metamonads", "Hemimastigophora", "Apusomonada", "Malawimonadidae"]
 
 # Choose the necessary group list from the group module.
-split_other_groups = sorted(group.split_groups_18())
-group_names = split_other_groups
+alt_groups = sorted(group.alt_groups_18())
+group_names = alt_groups
 data = []
 
 for name in group_names:
