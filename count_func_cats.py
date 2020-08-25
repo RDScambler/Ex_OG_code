@@ -5,7 +5,7 @@ import re
 
 def count_func_cats(file):
 	"""count_func_cats takes an eggnog output file as an argument, and counts different functional categories of each OG (note only one category is recorded per OG). These frequncies are stored in a
-	functional category frequency dictionary."""
+	functional category frequency dictionary. Note the function executes succesfully regardless of whether the eggnog output has been refined (i.e. parsed out) or is raw."""
 	og_list = group.count_ogs(file)
 	overall_list = []
 	for og in og_list:
@@ -31,4 +31,5 @@ def count_func_cats(file):
 
 	# List comprehension is used to generate a dict of counts for each cat in overall_list.
 	func_cat_freq_dict = {i:overall_list.count(i) for i in overall_list}
+
 	return func_cat_freq_dict
