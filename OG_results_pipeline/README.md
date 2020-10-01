@@ -1,9 +1,9 @@
 ### OG Results Pipeline
 
-This directory contains all the scripts necessary to generate all the unique orthogroups shared by every pairwise  
-eukaryote group in my dataset. The outputs are then calculated as a proportion of each group's genome. Outputs are  
-converted into heatmaps using og_to_heatmap.py. Different subgroups can be analysed by invoking different code maps  
-and group lists. Currently 12, 15, and 18-length group lists are present. These and their corresponding code maps  
+This directory contains all the scripts necessary to generate all the unique orthogroups shared by every pairwise 
+eukaryote group in my dataset. The outputs are then calculated as a proportion of each group's genome. Outputs are 
+converted into heatmaps using og_to_heatmap.py. Different subgroups can be analysed by invoking different code maps 
+and group lists. Currently 12, 15, and 18-length group lists are present. These and their corresponding code maps 
 can all be found in the group.py module, instantiated with OrthogroupSearch.
 
 The main piece of code is find_group(), now integrated into group.py, though the actual script iterating over each 
