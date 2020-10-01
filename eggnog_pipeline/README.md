@@ -16,10 +16,6 @@ relevant sequence files in OG_arb-fal into another file ready for eggnog
 annotation. emapper.py can then be run from the command line in the  
 eggnog-mapper directory.
 
-**og_list.py**
-This is a one-function file that takes a filename as an input and returns  
-all the OG filenames within it as a list.  
-
 **refine_and_parse_eg.py**
 This is the main script used post-analysis to format eggnog output files.  
 NOTE: not all information (GO, Kegg pathways) is parsed out so raw eggnog  
@@ -32,3 +28,5 @@ output files.
 NOTE: refine_and_parse_eg.py is currently configured with ventral groove  
 inputs and outputs.
  
+group.count_ogs() can be used to return a list of relevant OGs. This  
+supersedes og_list.py (count_ogs() regex is more flexible).

@@ -1,6 +1,7 @@
 			# This script parses all the OG output filenames relevant to the biological question.
 			# to_parse assumes directory is comprised entirely of output files that need to be parsed.
 			# output variable filename must of course be edited as necessary.
+			# NOTE: This script scans through every output file in the dir, was originally used for /ventral_groove.
 import glob
 
 output = open(, "w")

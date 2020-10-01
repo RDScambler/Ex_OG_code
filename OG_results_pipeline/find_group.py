@@ -1,49 +1,35 @@
-			# This script is written to iterate over every pairwise set of eukaryote groups.
-			# Unique OGs for each group are written to output files (stored in new_outputs directory).
-import group
+				# This scrpit iterates over every pairwise group of eukaryotes and every individual group to search for unique OGs.
+				# Eukaryote groups are defined based on the code map specified in sys.argv[1].
 import glob
-import re
+import group
+import sys
 
+# Customise code map and group list with sys.argv[1].
+og = group.OrthogroupSearch(sys.argv[1])
+all_groups = og.group_list()
 
-code_map = group.codes()
-group_names = group.groups()
+# Sort groups alphabetically.
+sorted_all_groups = sorted(all_groups)
 all_sets = []
-sorted_group_names = sorted(group_names)			# Ordering group_names alphabetically.
 
-for j in range(len(sorted_group_names)):
-        for i in range(len(sorted_group_names)):                # Iterates over every element of group_name by every other element
-                query = sorted_group_names[j], sorted_group_names[i]
-                file1 = '_'.join(query)				# Formats query for filenaming purposes
-                file1 += '_output'
-                if sorted_group_names[j] != sorted_group_names[i]:
-                        group_set = set(query)                  # Creates set, disregarding the order.
-                        x = 0					# x value necessary for the if else statement (lines 40-45).
-                else:                                           # Modifies group_set if j == i to only have 1 element..
-                        group_set = [sorted_group_names[j]]		# Creates array. Single element array will match with (unconverted) single element instances of groups_present.
-                        x = 1
-                if group_set not in all_sets:    		# Excludes sets which already exist.
-                        all_sets.append(group_set)
-                        filename = "%s.txt" % file1		# Formatting filename.
-                        genome = open(filename, 'w')
-                        to_parse = glob.glob('*.fal')		# Searches through all .fal files.
-                        k = 0					# Counter (giving total exclusive OGs for set).
-                        for file in to_parse:
-                                groups_present = []
-                                with open(file) as f:
-                                        for line in f:
-                                                if line.startswith('>'):
-                                                        fields = re.split('_', line)            # Separates sp. code
-                                                        species_code = fields[0][1:]		# Removes '>'
-                                                        for i in code_map:                      # Linking sp. code to group
-                                                                group = code_map[species_code]
-                                                                if group not in groups_present:     	# Adding to group array if new group
-                                                                        groups_present.append(group)
-                                if x == 0:								# Converts array to set (so order is irrelevant).
-                                        set_present = set(groups_present)
-                                else:									# groups_present remains as array to match with single element instances of group_set.
-                                        set_present = groups_present
-                                if group_set == set_present:
-                                        genomewrite = genome.write(f'{file}\n') 	# Adds file to output if it matches query
-                                        k += 1
-                        genomewrite = genome.write(f'Shared gene families: {k}')
-                        genome.close()
+# Iterate over every pair of groups.
+for eugroup in sorted_all_groups:
+	for ogroup in sorted_all_groups:
+		query = [eugroup, ogroup]
+		if eugroup != ogroup:
+			query = set(query)
+
+		# In this case the individual group is queried.
+		else:
+			query = eugroup
+
+		# Append to all sets to ensure no duplicate analyses.
+		if query not in all_sets:
+			all_sets.append(query)
+
+			# Reverts data to a sorted list so that names are alphabetical.
+			# Query must enter find_group as a list.
+			if isinstance(query, set):
+				query = sorted(query)
+			og.find_group(query)
+
