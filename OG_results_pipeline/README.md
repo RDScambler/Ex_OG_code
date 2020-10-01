@@ -6,7 +6,7 @@ converted into heatmaps using og_to_heatmap.py. Different subgroups can be analy
 and group lists. Currently 12, 15, and 18-length group lists are present. These and their corresponding code maps  
 can all be found in the group.py module, instantiated with OrthogroupSearch.
 
-The main piece of code is find_group(), now integrated into group.py, though the actual script iterating over each  
+The main piece of code is find_group(), now integrated into group.py, though the actual script iterating over each 
 pair of groups is find_group.py. setquery.py expands on this, taking input to customise searches.
 
 **find_group.py**  
